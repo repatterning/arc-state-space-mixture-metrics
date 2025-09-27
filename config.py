@@ -16,6 +16,8 @@ class Config:
         excluded for names such as warehouse, storage, depository, etc.<br><br>
         """
 
+        self.temporary_project_key_name = 'HydrographyProject'
+
         # Directories
         self.data_ = os.path.join(os.getcwd(), 'data')
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
