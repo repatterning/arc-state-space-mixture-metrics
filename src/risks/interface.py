@@ -1,12 +1,13 @@
 """Module risks/interface.py"""
 import json
 import logging
-import io
 
 import boto3
-import pandas as pd
 
 import src.elements.s3_parameters as s3p
+import src.elements.service as sr
+import src.risks.data
+import src.s3.keys
 import src.s3.unload
 
 
@@ -15,21 +16,18 @@ class Interface:
     An interface to the risks programs
     """
 
-    def __init__(self,s3_parameters: s3p.S3Parameters, connector: boto3.session.Session, ):
+    def __init__(self, connector: boto3.session.Session, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
 
+        :param connector: An instance of boto3.session.Session
+        :param service: A suite of services for interacting with Amazon Web Services.
         :param s3_parameters: The overarching S3 parameters settings of this
                               project, e.g., region code name, buckets, etc.<br>
-        :param connector: An instance of boto3.session.Session
         """
 
+        self.__connector = connector
+        self.__service = service
         self.__s3_parameters = s3_parameters
-
-        # An instance for S3 interactions
-        self.__s3_client: boto3.session.Session.client = connector.client(
-            service_name='s3')
-
-        self.__unload = src.s3.unload.Unload(s3_client=self.__s3_client)
 
     def exc(self):
         """
@@ -37,22 +35,11 @@ class Interface:
         :return:
         """
 
-        # Try
-        key_name = 'warehouse/risks/points/0004.json'
-        buffer = self.__unload.exc(bucket_name=self.__s3_parameters.external, key_name=key_name)
+        elements = src.s3.keys.Keys(service=self.__service, bucket_name=self.__s3_parameters.external).excerpt(
+            prefix='warehouse/risks/points/', delimiter='')
+        logging.info(elements)
 
-        try:
-            data = json.loads(buffer)
-        except json.JSONDecodeError as err:
-            raise err from err
-        logging.info(data)
-
-        for j in range(len(data)):
-
-            node:dict = data[j]
-            node.pop('catchment_id', None)
-            node.pop('catchment_name', None)
-            logging.info(node)
-
-            frame = pd.DataFrame.from_records(data=node['data'], index=node['index'], columns=node['columns'])
-            logging.info(frame)
+        for key_name in elements:
+            instances = src.risks.data.Data(
+                s3_parameters=self.__s3_parameters, connector=self.__connector, key_name=key_name).exc()
+            logging.info(instances)
