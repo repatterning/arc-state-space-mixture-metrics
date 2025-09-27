@@ -65,7 +65,7 @@ class Interface:
 
         # The strings for transferring data to Amazon S3 (Simple Storage Service)
         strings = self.__dictionary.exc(
-            path=self.__configurations.variational_, extension='json',
+            path=self.__configurations.latest_, extension='json',
             prefix=self.__configurations.prefix + '/')
 
         strings = self.__get_metadata(frame=strings.copy())
