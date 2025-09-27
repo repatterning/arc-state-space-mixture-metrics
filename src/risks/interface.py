@@ -1,4 +1,4 @@
-"""Module risks.py"""
+"""Module risks/interface.py"""
 import json
 import logging
 
@@ -36,7 +36,7 @@ class Interface:
         """
 
         # Try
-        key_name = 'warehouse/risk/points/0004.json'
+        key_name = 'warehouse/risks/points/0004.json'
         buffer = self.__unload.exc(bucket_name=self.__s3_parameters.external, key_name=key_name)
 
         try:
