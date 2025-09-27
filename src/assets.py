@@ -6,7 +6,6 @@ import sys
 
 import config
 import src.elements.s3_parameters as s3p
-import src.elements.service as sr
 import src.functions.cache
 import src.s3.directives
 import src.s3.keys
@@ -22,15 +21,13 @@ class Assets:
     will be unnecessary, edit accordingly.</b>
     """
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
+    def __init__(self, s3_parameters: s3p.S3Parameters):
         """
 
-        :param service:
         :param s3_parameters: The overarching S3 (Simple Storage Service) parameters
                               settings of this project, e.g., region code name, buckets, etc.
         """
 
-        self.__service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
         # Setting up
