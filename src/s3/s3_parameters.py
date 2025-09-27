@@ -23,20 +23,21 @@ class S3Parameters:
     https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
     """
 
-    def __init__(self, connector: boto3.session.Session, project_key_name: str):
+    def __init__(self, connector: boto3.session.Session):
         """
 
         :param connector: A boto3 session instance, it retrieves the developer's <default> Amazon
                           Web Services (AWS) profile details, which allows for programmatic interaction with AWS.
-        :param project_key_name: The project's key
         """
 
         self.__connector = connector
-        self.__project_key_name = project_key_name
 
         # Hence
         self.__configurations = config.Config()
         self.__secret = src.functions.secret.Secret(connector=connector)
+
+        # The project's key
+        self.__project_key_name = self.__configurations.project_key_name
 
     def __get_dictionary(self) -> dict:
         """
