@@ -18,15 +18,16 @@ def main():
     logger.info('Starting: %s', datetime.datetime.now().isoformat(timespec='microseconds'))
 
     # Assets
-    src.assets.Assets(service=service, s3_parameters=s3_parameters).exc()
+    src.assets.Assets(s3_parameters=s3_parameters).exc()
     specifications_ = src.data.interface.Interface(s3_parameters=s3_parameters).exc()
+    logger.info(specifications_)
 
     # Evaluating predictions
     src.predictions.interface.Interface(arguments=arguments).exc(specifications_=specifications_)
 
     # Transfer
-    src.transfer.interface.Interface(
-      connector=connector, service=service, s3_parameters=s3_parameters).exc()
+    # src.transfer.interface.Interface(
+    #   connector=connector, service=service, s3_parameters=s3_parameters).exc()
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
