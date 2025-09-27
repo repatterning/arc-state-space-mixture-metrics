@@ -1,3 +1,4 @@
+"""Module risks/data.py"""
 import json
 
 import boto3
@@ -10,6 +11,9 @@ import src.s3.unload
 
 
 class Data:
+    """
+    Data
+    """
 
     def __init__(self, connector: boto3.session.Session, s3_parameters: s3p.S3Parameters, key_name: str):
         """
