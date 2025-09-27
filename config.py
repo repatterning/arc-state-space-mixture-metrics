@@ -1,6 +1,4 @@
 """config.py"""
-import datetime
-import logging
 import os
 
 
@@ -22,17 +20,18 @@ class Config:
         self.data_ = os.path.join(os.getcwd(), 'data')
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
 
-        self.variational_ = os.path.join(self.warehouse, 'variational')
-        self.points_ = os.path.join(self.variational_, 'points')
-        self.menu_ = os.path.join(self.variational_, 'menu')
+        self.latest_ = os.path.join(self.warehouse, 'latest')
+        self.points_ = os.path.join(self.latest_, 'points')
+        self.menu_ = os.path.join(self.latest_, 'menu')
+        self.maps_ = os.path.join(self.latest_, 'maps')
 
         # The model assets section
-        self.origin_ = 'assets/variational/{stamp}'
+        self.origin_ = 'assets/latest'
 
         # Keys, etc
         self.s3_parameters_key = 's3_parameters.yaml'
-        self.argument_key = 'artefacts' + '/' + 'architecture' + '/' + 'variational' + '/' + 'arguments.json'
-        self.metadata_ = 'viability/external'
+        self.argument_key = 'artefacts' + '/' + 'architecture' + '/' + 'latest' + '/' + 'arguments.json'
+        self.metadata_ = 'events/external'
 
         # Prefix
-        self.prefix = 'warehouse' + '/' + 'variational'
+        self.prefix = 'warehouse' + '/' + 'latest'
