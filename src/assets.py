@@ -4,8 +4,6 @@ import logging
 import os
 import sys
 
-import numpy as np
-
 import config
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
@@ -42,27 +40,6 @@ class Assets:
         # Directives
         self.__directives = src.s3.directives.Directives()
 
-    def __get_origin(self) -> str:
-        """
-        now = datetime.datetime.now()
-        offset = (now.weekday() - 0) % 7
-        monday = now - datetime.timedelta(days=offset)
-        stamp: str = monday.strftime('%Y-%m-%d')
-
-        :return:
-        """
-
-        elements = src.s3.keys.Keys(service=self.__service, bucket_name=self.__s3_parameters.internal).excerpt(
-            prefix='assets/variational/', delimiter='/')
-        keys = [element.split('/', maxsplit=3)[2] for element in elements]
-        strings = list(set(keys))
-        values = np.array(strings, dtype='datetime64')
-        stamp = str(values.max())
-
-        logging.info('Latest: %s', stamp)
-
-        return self.__configurations.origin_.format(stamp=stamp)
-
     def __get_assets(self, origin: str) -> int:
         """
 
@@ -82,7 +59,7 @@ class Assets:
         :return:
         """
 
-        origin = self.__get_origin()
+        origin = self.__configurations.origin_
 
         # The artefacts, vis-à-vis modelling.
         state = self.__get_assets(origin=origin)
