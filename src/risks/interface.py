@@ -1,11 +1,17 @@
+"""Module risks.py"""
+import json
+import logging
 
 import boto3
 
-import src.s3.unload
 import src.elements.s3_parameters as s3p
+import src.s3.unload
 
 
 class Interface:
+    """
+    An interface to the risks programs
+    """
 
     def __init__(self,s3_parameters: s3p.S3Parameters, connector: boto3.session.Session, ):
         """
@@ -24,4 +30,18 @@ class Interface:
         self.__unload = src.s3.unload.Unload(s3_client=self.__s3_client)
 
     def exc(self):
-        pass
+        """
+
+        :return:
+        """
+
+        # Try
+        key_name = 'warehouse/risk/points/0004.json'
+        buffer = self.__unload.exc(bucket_name=self.__s3_parameters.external, key_name=key_name)
+
+        try:
+            data = json.loads(buffer)
+        except json.JSONDecodeError as err:
+            raise err from err
+
+        logging.info(data)
