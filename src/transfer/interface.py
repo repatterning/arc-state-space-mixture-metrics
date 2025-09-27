@@ -37,7 +37,6 @@ class Interface:
         # Metadata
         self.__metadata = src.transfer.metadata.Metadata(connector=connector)
 
-
         # Instances
         self.__dictionary = src.transfer.dictionary.Dictionary()
 
