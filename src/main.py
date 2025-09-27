@@ -18,12 +18,15 @@ def main():
     logger.info('Starting: %s', datetime.datetime.now().isoformat(timespec='microseconds'))
 
     # Assets
-    src.assets.Assets(s3_parameters=s3_parameters).exc()
-    specifications_ = src.data.interface.Interface(s3_parameters=s3_parameters).exc()
-    logger.info(specifications_)
+    # src.assets.Assets(s3_parameters=s3_parameters).exc()
+    # specifications_ = src.data.interface.Interface(s3_parameters=s3_parameters).exc()
+    # logger.info(specifications_)
 
     # Evaluating predictions
-    src.predictions.interface.Interface(arguments=arguments).exc(specifications_=specifications_)
+    # src.predictions.interface.Interface(arguments=arguments).exc(specifications_=specifications_)
+
+    # Risks
+    src.risks.interface.Interface(service=service, s3_parameters=s3_parameters, connector=connector).exc()
 
     # Transfer
     # src.transfer.interface.Interface(
@@ -54,6 +57,7 @@ if __name__ == '__main__':
     import src.functions.cache
     import src.predictions.interface
     import src.preface.interface
+    import src.risks.interface
     import src.transfer.interface
 
     connector: boto3.session.Session
