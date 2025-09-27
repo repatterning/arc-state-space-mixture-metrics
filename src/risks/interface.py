@@ -3,6 +3,7 @@ import json
 import logging
 
 import boto3
+import pandas as pd
 
 import src.elements.s3_parameters as s3p
 import src.s3.unload
@@ -43,5 +44,10 @@ class Interface:
             data = json.loads(buffer)
         except json.JSONDecodeError as err:
             raise err from err
-
         logging.info(data)
+
+        logging.info(len(data))
+
+
+
+
