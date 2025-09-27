@@ -1,6 +1,7 @@
 """Module risks/interface.py"""
 import json
 import logging
+import io
 
 import boto3
 import pandas as pd
@@ -46,8 +47,12 @@ class Interface:
             raise err from err
         logging.info(data)
 
-        logging.info(len(data))
+        for j in range(len(data)):
 
+            node:dict = data[j]
+            node.pop('catchment_id', None)
+            node.pop('catchment_name', None)
+            logging.info(node)
 
-
-
+            frame = pd.DataFrame.from_records(data=node['data'], index=node['index'], columns=node['columns'])
+            logging.info(frame)
