@@ -1,16 +1,17 @@
 """Module cartography/data.py"""
-import logging
-
 import geopandas
 import pandas as pd
 
 
 class Data:
+    """
+    Data
+    """
 
     def __init__(self, care: geopandas.GeoDataFrame):
         """
 
-        :param care:
+        :param care: Care home frame
         """
 
         self.__care = self.__get_care(care=care.copy())
@@ -22,10 +23,10 @@ class Data:
                           'latest', 'maximum', 'minimum', 'median', 'ending', 'river_name']
 
     @staticmethod
-    def __get_care(care):
+    def __get_care(care: geopandas.GeoDataFrame):
         """
 
-        :param care:
+        :param care: Care home frame
         :return:
         """
 
@@ -38,7 +39,7 @@ class Data:
     def exc(self, risks: pd.DataFrame):
         """
 
-        :param risks:
+        :param risks: A frame of river level change rates, etc.
         :return:
         """
 
