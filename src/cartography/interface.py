@@ -39,6 +39,6 @@ class Interface:
         logging.info(elements)
 
         for key_name in elements:
-            instances = src.risks.data.Data(
+            instances = src.cartography.data.Data(
                 s3_parameters=self.__s3_parameters, connector=self.__connector, key_name=key_name).exc()
             logging.info(instances)
