@@ -51,14 +51,14 @@ class Risks:
         return data
 
     @dask.delayed
-    def __get_part(self, j: int) -> pd.DataFrame:
+    def __get_part(self, index: int) -> pd.DataFrame:
         """
 
-        :param j:
+        :param index:
         :return:
         """
 
-        node:dict = self.__data[j]
+        node:dict = self.__data[index]
         frame = pd.DataFrame.from_records(data=node['data'], index=node['index'], columns=node['columns'])
         frame['catchment_id'] = node['catchment_id']
         frame['catchment_name'] = node['catchment_name']
@@ -72,8 +72,8 @@ class Risks:
         """
 
         computations = []
-        for j in range(len(self.__data)):
-            frame = self.__get_part(j=j)
+        for i in range(len(self.__data)):
+            frame = self.__get_part(index=i)
             computations.append(frame)
         structures = dask.compute(computations, scheduler='threads')[0]
 
