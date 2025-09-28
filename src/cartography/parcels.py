@@ -56,6 +56,7 @@ class Parcels:
     def exc(self, members: list) -> list[pcl.Parcel]:
         """
 
+        :param members:
         :return:
         """
 
