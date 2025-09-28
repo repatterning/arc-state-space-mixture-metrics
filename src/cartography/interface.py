@@ -7,7 +7,6 @@ import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.cartography.data
 import src.s3.keys
-import src.s3.unload
 
 
 class Interface:
