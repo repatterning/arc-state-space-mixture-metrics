@@ -26,7 +26,7 @@ def main():
     # src.predictions.interface.Interface(arguments=arguments).exc(specifications_=specifications_)
 
     # Risks
-    src.risks.interface.Interface(service=service, s3_parameters=s3_parameters, connector=connector).exc()
+    src.cartography.interface.Interface(service=service, s3_parameters=s3_parameters, connector=connector).exc()
 
     # Transfer
     # src.transfer.interface.Interface(
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     import src.functions.cache
     import src.predictions.interface
     import src.preface.interface
-    import src.risks.interface
+    import src.cartography.interface
     import src.transfer.interface
 
     connector: boto3.session.Session
