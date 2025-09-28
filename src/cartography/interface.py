@@ -40,6 +40,8 @@ class Interface:
         coarse.info()
         logging.info(coarse)
         care = self.__maps.exc(key_name='cartography/care_and_coarse_catchments.geojson')
+        care['latitude'] = care.geometry.apply(lambda k: k.y)
+        care['longitude'] = care.geometry.apply(lambda k: k.x)
         care.info()
         logging.info(care)
 
@@ -52,4 +54,5 @@ class Interface:
         for key_name in elements:
             risks = src.cartography.risks.Risks(
                 s3_parameters=self.__s3_parameters, connector=self.__connector, key_name=key_name).exc()
+            risks.info()
             logging.info(risks)
