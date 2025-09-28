@@ -35,6 +35,11 @@ class Risks:
         self.__data = self.__get_data(key_name=key_name)
 
     def __get_data(self, key_name: str) -> dict:
+        """
+
+        :param key_name:
+        :return:
+        """
 
         buffer = self.__unload.exc(bucket_name=self.__s3_parameters.external, key_name=key_name)
 
@@ -47,6 +52,11 @@ class Risks:
 
     @dask.delayed
     def __get_part(self, j: int) -> pd.DataFrame:
+        """
+
+        :param j:
+        :return:
+        """
 
         node:dict = self.__data[j]
         frame = pd.DataFrame.from_records(data=node['data'], index=node['index'], columns=node['columns'])
