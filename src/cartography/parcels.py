@@ -1,4 +1,5 @@
 """Module parcels.py"""
+import logging
 import geopandas
 import numpy as np
 import pandas as pd
@@ -39,15 +40,9 @@ class Parcels:
         :return:
         """
 
-        frame = self.__data[['catchment_id', 'catchment_name', 'latest']].groupby(
-            by=['catchment_id', 'catchment_name']).agg(maximum=('latest', 'max'))
-
-        # Convert 'catchment_id' & 'catchment_name' to fields; currently indices.
-        frame.reset_index(drop=False, inplace=True)
+        frame = self.__data[['catchment_id', 'catchment_name']].drop_duplicates()
 
         # Hence
-        frame['rank'] = frame['maximum'].rank(method='first', ascending=False).astype(int)
-        frame.drop(columns='maximum', inplace=True)
         frame.sort_values(by='catchment_name', inplace=True)
         frame.reset_index(drop=True, inplace=True)
 
@@ -62,7 +57,8 @@ class Parcels:
 
         catchments = self.__catchments()
         catchments['decimal'] = self.__get_decimals(size=catchments.shape[0])
-        catchments['warning'] = catchments.loc[catchments['catchment_id'].isin(members), :]
+        catchments['warning'] = catchments['catchment_id'].isin(members).values
+        logging.info(catchments)
 
         # An iterable for mapping by layer
         values: list[dict] = catchments.to_dict(orient='records')
