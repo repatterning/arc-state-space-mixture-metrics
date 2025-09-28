@@ -3,6 +3,7 @@ import json
 
 import boto3
 import dask
+import geopandas
 import pandas as pd
 
 import src.elements.s3_parameters as s3p
@@ -65,7 +66,7 @@ class Risks:
 
         return frame
 
-    def exc(self) -> pd.DataFrame:
+    def exc(self) -> geopandas.GeoDataFrame:
         """
 
         :return:
@@ -77,4 +78,8 @@ class Risks:
             computations.append(frame)
         structures = dask.compute(computations, scheduler='threads')[0]
 
-        return pd.concat(structures, axis=0, ignore_index=True)
+        values =  pd.concat(structures, axis=0, ignore_index=True)
+        c_4326 = geopandas.GeoDataFrame(values, geometry=geopandas.points_from_xy(values.longitude, values.latitude))
+        c_4326.crs = 'epsg:4326'
+
+        return c_4326
