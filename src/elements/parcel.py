@@ -8,9 +8,6 @@ class Parcel(typing.NamedTuple):
 
     Attributes<br>
     ----------<br>
-    <b>rank</b>: int<br>
-        A catchment's rank in relation its maximum millimetres/hour value; the catchment that has
-        the highest maximum value has rank 0 or 1.<br><br>
     <b>catchment_id</b>: int<br>
         The identification code of a catchment area.<br><br>
     <b>catchment_name</b>: str<br>
@@ -21,7 +18,6 @@ class Parcel(typing.NamedTuple):
         Included in the latest warning?
     """
 
-    rank: int
     catchment_id: int
     catchment_name: str
     decimal: float
