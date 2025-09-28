@@ -1,12 +1,13 @@
-"""Module risks/interface.py"""
+"""Module cartography/interface.py"""
 import logging
 
 import boto3
 
-import src.cartography.data
+import src.cartography.risks
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.s3.keys
+import src.cartography.maps
 
 
 class Interface:
@@ -27,17 +28,28 @@ class Interface:
         self.__service = service
         self.__s3_parameters = s3_parameters
 
+        self.__maps = src.cartography.maps.Maps(connector=self.__connector, s3_parameters=self.__s3_parameters)
+
     def exc(self):
         """
 
         :return:
         """
 
+        coarse = self.__maps.exc(key_name='cartography/coarse.geojson')
+        coarse.info()
+        logging.info(coarse)
+        care = self.__maps.exc(key_name='cartography/care_and_coarse_catchments.geojson')
+        care.info()
+        logging.info(care)
+
+        # The list of rate files
         elements = src.s3.keys.Keys(service=self.__service, bucket_name=self.__s3_parameters.external).excerpt(
             prefix='warehouse/risks/points/', delimiter='')
         logging.info(elements)
 
+        # Per rate risk file
         for key_name in elements:
-            instances = src.cartography.data.Data(
+            risks = src.cartography.risks.Risks(
                 s3_parameters=self.__s3_parameters, connector=self.__connector, key_name=key_name).exc()
-            logging.info(instances)
+            logging.info(risks)
