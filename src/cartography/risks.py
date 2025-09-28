@@ -1,4 +1,4 @@
-"""Module risks/data.py"""
+"""Module cartography/risks.py"""
 import json
 
 import boto3
@@ -10,7 +10,7 @@ import src.s3.keys
 import src.s3.unload
 
 
-class Data:
+class Risks:
     """
     Data
     """
