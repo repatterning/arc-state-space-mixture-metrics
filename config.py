@@ -33,7 +33,7 @@ class Config:
 
         # Keys, etc
         self.s3_parameters_key = 's3_parameters.yaml'
-        self.argument_key = 'artefacts' + '/' + 'architecture' + '/' + 'latest' + '/' + 'arguments.json'
+        self.argument_key = 'artefacts/architecture/latest/arguments.json'
         self.metadata_ = 'events/external'
 
         # Prefix
