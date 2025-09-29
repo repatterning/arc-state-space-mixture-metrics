@@ -60,8 +60,7 @@ class Interface:
                 s3_parameters=self.__s3_parameters, connector=self.__connector, key_name=key_name).exc()
 
             # Build
-            data = __data.exc(risks=risks)
-            data.info()
+            data: geopandas.GeoDataFrame = __data.exc(risks=risks)
 
             # Draw
             src.cartography.illustrate.Illustrate(
