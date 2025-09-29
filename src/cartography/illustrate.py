@@ -1,5 +1,4 @@
 """Module cartography/illustrate.py"""
-import logging
 import os
 
 import branca.colormap
@@ -38,6 +37,7 @@ class Illustrate:
         self.__c_latitude, self.__c_longitude = src.cartography.centroids.Centroids(blob=self.__data).__call__()
         self.__parcels: list[pcl.Parcel] = src.cartography.parcels.Parcels(data=self.__data).exc(members=members)
 
+    # pylint: disable=R0915
     def exc(self, _name: str):
         """
 
