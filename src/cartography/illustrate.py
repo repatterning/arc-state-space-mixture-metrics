@@ -1,5 +1,4 @@
 """Module cartography/illustrate.py"""
-import logging
 import os
 
 import branca.colormap
@@ -75,8 +74,10 @@ class Illustrate:
             vector = folium.FeatureGroup(name=parcel.catchment_name, show=show)
 
             # the instances of a catchment
-            instances = self.__data.copy().loc[(self.__data['catchment_id'] == parcel.catchment_id) & (self.__data['focus'] == 'gauge'), :]
-            leaves = self.__data.copy().loc[(self.__data['catchment_id'] == parcel.catchment_id) & (self.__data['focus'] == 'elders'), :]
+            instances = self.__data.copy().loc[
+                        (self.__data['catchment_id'] == parcel.catchment_id) & (self.__data['focus'] == 'gauge'), :]
+            leaves = self.__data.copy().loc[
+                     (self.__data['catchment_id'] == parcel.catchment_id) & (self.__data['focus'] == 'elders'), :]
 
             folium.GeoJson(
                 data = instances.to_crs(epsg=3857),
@@ -111,5 +112,4 @@ class Illustrate:
         ).add_to(waves)
 
         # Persist
-        outfile = os.path.join(self.__configurations.maps_, f'{_name}.html')
-        waves.save(outfile=outfile)
+        waves.save(outfile=os.path.join(self.__configurations.maps_, f'{_name}.html'))
