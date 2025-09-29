@@ -2,6 +2,10 @@
 
 ## Environments
 
+* [Advanced GeoJSON Customization with on_each_feature](https://python-visualization.github.io/folium/dev/user_guide/geojson/geojson_advanced_on_each_feature.html)
+
+<br>
+
 ### Remote Development
 
 For this Python project/template, the remote development environment requires
