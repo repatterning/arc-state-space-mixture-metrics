@@ -1,9 +1,11 @@
 """Module cartography/illustrate.py"""
+import logging
 import os
 
 import branca.colormap
 import folium
 import folium.plugins
+import folium.utilities
 import geopandas
 
 import config
@@ -73,27 +75,36 @@ class Illustrate:
             show = parcel.warning
             vector = folium.FeatureGroup(name=parcel.catchment_name, show=show)
 
-            # the instances of a catchment
-            instances = self.__data.copy().loc[
+            # gauges, care homes
+            instances: geopandas.GeoDataFrame = self.__data.copy().loc[
                         (self.__data['catchment_id'] == parcel.catchment_id) & (self.__data['focus'] == 'gauge'), :]
-            leaves = self.__data.copy().loc[
+            instances.to_crs(epsg=3857, inplace=True)
+            leaves: geopandas.GeoDataFrame = self.__data.copy().loc[
                      (self.__data['catchment_id'] == parcel.catchment_id) & (self.__data['focus'] == 'elders'), :]
+            leaves.to_crs(epsg=3857, inplace=True)
+
+            # Gauges
+            on_each_feature = folium.utilities.JsCode("""
+                function(feature, layer) {
+                    layer.bindTooltip(
+                        '<b>' + feature.properties.station_name + '</b><br>' +
+                        'measure: ' + feature.properties.latest
+                    );}""")
 
             folium.GeoJson(
-                data = instances.to_crs(epsg=3857),
+                instances,
                 name=f'{parcel.catchment_name}',
                 marker=folium.CircleMarker(
                     radius=22.5, stroke=False, fill=True, fillColor=colours(parcel.decimal), fillOpacity=0.65),
-                tooltip=folium.GeoJsonTooltip(
-                    fields=['latest', 'maximum', 'median', 'station_name', 'river_name', 'catchment_name'],
-                    aliases=['latest (mm/hr)', 'maximum (mm/hr)', 'median (mm/hr)', 'Station', 'River/Water', 'Catchment']),
                 style_function=lambda feature: {
                     "fillOpacity": custom.f_opacity(feature['properties']['latest']),
                     "radius": custom.f_radius(feature['properties']['latest'])
                 },
-                zoom_on_click=True
+                zoom_on_click=True,
+                on_each_feature=on_each_feature
             ).add_to(vector)
 
+            # Care Homes
             for i in range(leaves.shape[0]):
                 folium.Marker(
                     location=[leaves.iloc[i]['latitude'], leaves.iloc[i]['longitude']],
@@ -101,8 +112,8 @@ class Illustrate:
                     icon=folium.Icon(prefix='fa', icon='house-flag', icon_size=(0.5,0.5), color='white', icon_color='black')
                 ).add_to(vector)
 
+            # Finally
             waves.add_child(vector)
-
             computations.append(vector)
 
         folium.plugins.GroupedLayerControl(
@@ -112,4 +123,5 @@ class Illustrate:
         ).add_to(waves)
 
         # Persist
-        waves.save(outfile=os.path.join(self.__configurations.maps_, f'{_name}.html'))
+        outfile = os.path.join(self.__configurations.maps_, f'{_name}.html')
+        waves.save(outfile=outfile)
