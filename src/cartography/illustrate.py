@@ -68,7 +68,7 @@ class Illustrate:
             }
         ).add_to(waves)
 
-        # codes, names, decimals
+        # Hence
         computations = []
         for parcel in self.__parcels:
 
@@ -88,7 +88,11 @@ class Illustrate:
                 function(feature, layer) {
                     layer.bindTooltip(
                         '<b>' + feature.properties.station_name + '</b><br>' +
-                        'measure: ' + feature.properties.latest.toFixed(4)
+                        'Latest: ' + feature.properties.latest.toFixed(4) + ' mm/hr<br>' +
+                        'Median: ' + feature.properties.median.toFixed(4) + ' mm/hr<br>' +
+                        'Maximum: ' + feature.properties.maximum.toFixed(4) + ' mm/hr<br>' +
+                        'River/Water: ' + feature.properties.river_name + '<br>' +
+                        'Catchment: ' + feature.properties.catchment_name + '<br>'
                     );}""")
 
             folium.GeoJson(
@@ -117,9 +121,7 @@ class Illustrate:
             computations.append(vector)
 
         folium.plugins.GroupedLayerControl(
-            groups={'catchment': computations},
-            exclusive_groups=False,
-            collapsed=True
+            groups={'catchment': computations}, exclusive_groups=False, collapsed=True
         ).add_to(waves)
 
         # Persist
