@@ -1,4 +1,4 @@
-"""Module interface.py"""
+"""Module transfer/interface.py"""
 import logging
 
 import boto3
@@ -32,12 +32,9 @@ class Interface:
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
-        self.__configurations = config.Config()
-
-        # Metadata
-        self.__metadata = src.transfer.metadata.Metadata(connector=connector)
-
         # Instances
+        self.__configurations = config.Config()
+        self.__metadata = src.transfer.metadata.Metadata(connector=connector)
         self.__dictionary = src.transfer.dictionary.Dictionary()
 
     def __get_metadata(self, frame: pd.DataFrame) -> pd.DataFrame:
@@ -47,12 +44,10 @@ class Interface:
         :return:
         """
 
-        _metadata_p = self.__metadata.exc(name='points.json')
-        _metadata_m = self.__metadata.exc(name='menu.json')
+        _metadata = self.__metadata.exc(name='metadata.json')
 
         frame = frame.assign(
-            metadata = frame['section'].apply(
-                lambda x: _metadata_p if x == 'points' else _metadata_m))
+            metadata = frame['section'].map(lambda x: _metadata[x]))
 
         return frame
 
@@ -64,7 +59,7 @@ class Interface:
 
         # The strings for transferring data to Amazon S3 (Simple Storage Service)
         strings = self.__dictionary.exc(
-            path=self.__configurations.latest_, extension='json',
+            path=self.__configurations.latest_, extension='*',
             prefix=self.__configurations.prefix + '/')
 
         strings = self.__get_metadata(frame=strings.copy())
