@@ -63,6 +63,7 @@ class Risks:
         frame = pd.DataFrame.from_records(data=node['data'], index=node['index'], columns=node['columns'])
         frame['catchment_id'] = node['catchment_id']
         frame['catchment_name'] = node['catchment_name']
+        frame['ending_str'] = pd.to_datetime(frame['ending'], unit='ms').dt.strftime("%Y-%m-%d %H:%M:%S")
 
         return frame
 
