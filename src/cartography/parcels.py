@@ -1,5 +1,4 @@
 """Module parcels.py"""
-import logging
 import geopandas
 import numpy as np
 import pandas as pd
@@ -58,7 +57,6 @@ class Parcels:
         catchments = self.__catchments()
         catchments['decimal'] = self.__get_decimals(size=catchments.shape[0])
         catchments['warning'] = catchments['catchment_id'].isin(members).values
-        logging.info(catchments)
 
         # An iterable for mapping by layer
         values: list[dict] = catchments.to_dict(orient='records')
