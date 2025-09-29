@@ -20,7 +20,7 @@ class Data:
         self.__f_care = ['catchment_id', 'catchment_name', 'focus', 'latitude', 'longitude', 'organisation',
                          'town', 'local_authority', 'geometry']
         self.__f_risks = ['catchment_id', 'catchment_name', 'focus', 'latitude', 'longitude', 'station_name',
-                          'latest', 'maximum', 'minimum', 'median', 'ending', 'river_name', 'geometry']
+                          'latest', 'maximum', 'minimum', 'median', 'ending', 'ending_str', 'river_name', 'geometry']
 
     @staticmethod
     def __get_care(care: geopandas.GeoDataFrame) -> geopandas.GeoDataFrame:
