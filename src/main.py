@@ -10,7 +10,11 @@ import numpy as np
 
 def main():
     """
-    Entry Point
+    Entry Point<br>
+    -----------<br>
+
+    Example:
+        members = [277152, 277157, 277164, 277165, 277169, 277171, 277181, 277186]<br>
 
     :return:
     """
@@ -31,8 +35,8 @@ def main():
         service=service, s3_parameters=s3_parameters, connector=connector).exc(members=members)
 
     # Transfer
-    # src.transfer.interface.Interface(
-    #   connector=connector, service=service, s3_parameters=s3_parameters).exc()
+    src.transfer.interface.Interface(
+      connector=connector, service=service, s3_parameters=s3_parameters).exc()
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
@@ -52,14 +56,13 @@ if __name__ == '__main__':
 
     # Modules
     import src.assets
+    import src.cartography.interface
     import src.data.interface
-
     import src.elements.service as sr
     import src.elements.s3_parameters as s3p
     import src.functions.cache
     import src.predictions.interface
     import src.preface.interface
-    import src.cartography.interface
     import src.transfer.interface
 
     connector: boto3.session.Session
