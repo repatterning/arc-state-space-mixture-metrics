@@ -88,7 +88,7 @@ class Illustrate:
                 function(feature, layer) {
                     layer.bindTooltip(
                         '<b>' + feature.properties.station_name + '</b><br>' +
-                        'measure: ' + feature.properties.latest
+                        'measure: ' + feature.properties.latest.toFixed(4)
                     );}""")
 
             folium.GeoJson(
