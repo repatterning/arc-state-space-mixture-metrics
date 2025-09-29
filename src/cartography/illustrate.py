@@ -92,7 +92,7 @@ class Illustrate:
                         'Median: ' + feature.properties.median.toFixed(4) + ' mm/hr<br>' +
                         'Maximum: ' + feature.properties.maximum.toFixed(4) + ' mm/hr<br>' +
                         'River/Water: ' + feature.properties.river_name + '<br>' +
-                        'Catchment: ' + feature.properties.catchment_name + '<br>'
+                        'Catchment: ' + feature.properties.catchment_name + '<br>As of: ' + feature.properties.ending_str
                     );}""")
 
             folium.GeoJson(
