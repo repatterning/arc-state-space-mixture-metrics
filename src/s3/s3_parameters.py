@@ -36,6 +36,9 @@ class S3Parameters:
         self.__configurations = config.Config()
         self.__secret = src.functions.secret.Secret(connector=connector)
 
+        # The project's key
+        self.__project_key_name = self.__configurations.project_key_name
+
     def __get_dictionary(self) -> dict:
         """
 
@@ -59,10 +62,10 @@ class S3Parameters:
         s3_parameters = s3p.S3Parameters(**dictionary)
 
         # Parsing variables
-        region_name = self.__secret.exc(secret_id='RegionCodeDefault')
-        internal = self.__secret.exc(secret_id='HydrographyProject', node='internal')
-        external = self.__secret.exc(secret_id='HydrographyProject', node='external')
-        configurations = self.__secret.exc(secret_id='HydrographyProject', node='configurations')
+        region_name = self.__secret.exc(secret_id=self.__project_key_name, node='region')
+        internal = self.__secret.exc(secret_id=self.__project_key_name, node='internal')
+        external = self.__secret.exc(secret_id=self.__project_key_name, node='external')
+        configurations = self.__secret.exc(secret_id=self.__project_key_name, node='configurations')
 
         s3_parameters: s3p.S3Parameters = s3_parameters._replace(
             location_constraint=region_name, region_name=region_name,

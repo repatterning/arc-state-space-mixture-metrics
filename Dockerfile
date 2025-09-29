@@ -1,5 +1,5 @@
 # Base Image
-FROM python:3.12.10-bookworm
+FROM python:3.13.7-bookworm
 
 
 # Temporary
@@ -17,7 +17,6 @@ COPY .devcontainer/requirements.txt /app
 SHELL [ "/bin/bash", "-c" ]
 
 
-# Setting-up
 RUN groupadd --system automata --gid $GID && \
     useradd --system automaton --uid $UID --gid $GID && \
     apt update && apt -q -y upgrade && apt -y install sudo && sudo apt -y install graphviz && \
@@ -26,8 +25,8 @@ RUN groupadd --system automata --gid $GID && \
     unzip /tmp/awscliv2.zip -d /tmp/ && cd /tmp && sudo ./aws/install && cd ~ && \
     pip install --upgrade pip && \
     pip install --requirement /app/requirements.txt --no-cache-dir && \
-    mkdir /app/warehouse && mkdir /app/data && \
-    chown -R automaton:automata /app/warehouse && chown -R automaton:automata /app/data
+    mkdir /app/warehouse && \
+    chown -R automaton:automata /app/warehouse
 
 
 # Specific COPY
@@ -40,7 +39,7 @@ EXPOSE 8050
 
 
 # Create mountpoint
-VOLUME /app/warehouse /app/data
+VOLUME /app/warehouse
 
 
 # automaton

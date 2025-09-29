@@ -29,7 +29,7 @@ class Unload:
     def __init__(self, s3_client: boto3.session.Session.client):
         """
 
-        :param service: A suite of services for interacting with Amazon Web Services.
+        :param s3_client: Client.
         """
 
         self.__s3_client = s3_client

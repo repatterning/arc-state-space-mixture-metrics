@@ -4,6 +4,7 @@ import json
 import boto3
 import yaml
 
+import config
 import src.functions.secret
 import src.s3.unload
 
@@ -26,7 +27,8 @@ class Configurations:
         self.__s3_client: boto3.session.Session.client = connector.client(
             service_name='s3')
 
-        # An instance for Secrets Manager interactions.
+        # Instances
+        self.__configurations = config.Config()
         self.__secret = src.functions.secret.Secret(connector=connector)
 
     def __buffer(self, key_name: str):
@@ -37,7 +39,8 @@ class Configurations:
         """
 
         buffer = src.s3.unload.Unload(s3_client=self.__s3_client).exc(
-            bucket_name=self.__secret.exc(secret_id='HydrographyProject', node='configurations'),
+            bucket_name=self.__secret.exc(
+                secret_id=self.__configurations.project_key_name, node='configurations'),
             key_name=key_name)
 
         return buffer
