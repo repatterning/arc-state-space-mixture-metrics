@@ -1,5 +1,4 @@
 """Module cartography/interface.py"""
-import logging
 import pathlib
 
 import boto3
