@@ -78,7 +78,7 @@ class Risks:
             computations.append(frame)
         structures = dask.compute(computations, scheduler='threads')[0]
 
-        values =  pd.concat(structures, axis=0, ignore_index=True)
+        values = pd.concat(structures, axis=0, ignore_index=True)
         c_4326 = geopandas.GeoDataFrame(values, geometry=geopandas.points_from_xy(values.longitude, values.latitude))
         c_4326.crs = 'epsg:4326'
 
