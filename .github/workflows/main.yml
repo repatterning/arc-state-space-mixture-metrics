@@ -45,6 +45,9 @@ jobs:
           echo "Issues in relation to logic (F7), syntax (Python E9, Flake F7), mathematical
           formulae symbols (F63), undefined variable names (F82):"
           
+          printf "\n src/cartography "
+          flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/cartography
+          
           printf "\n src/data "
           flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/data
           
@@ -70,6 +73,9 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           printf "\n\n"
           echo "Complexity issues:"
+          
+          printf "\n src/cartography "
+          flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/cartography
           
           printf "\n src/data "
           flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/data
@@ -98,6 +104,9 @@ jobs:
           printf "\n"
           echo "============================= pylint session starts =============================="
           
+          
+          printf "\n Package src/cartography"
+          pylint --rcfile .pylintrc src/cartography
           
           printf "\n Package src/data"
           pylint --rcfile .pylintrc src/data
