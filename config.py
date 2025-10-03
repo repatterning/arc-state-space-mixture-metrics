@@ -27,6 +27,9 @@ class Config:
         self.points_ = os.path.join(self.latest_, 'points')
         self.menu_ = os.path.join(self.latest_, 'menu')
 
+        # Prefix
+        self.prefix = 'warehouse/latest'
+
         # The model assets section
         self.origin_ = 'assets/latest'
 
@@ -34,6 +37,3 @@ class Config:
         self.s3_parameters_key = 's3_parameters.yaml'
         self.argument_key = 'artefacts/architecture/latest/arguments.json'
         self.metadata_ = 'events/external'
-
-        # Prefix
-        self.prefix = 'warehouse' + '/' + 'latest'
