@@ -26,7 +26,6 @@ class Config:
         self.latest_ = os.path.join(self.warehouse, 'latest')
         self.points_ = os.path.join(self.latest_, 'points')
         self.menu_ = os.path.join(self.latest_, 'menu')
-        self.maps_ = os.path.join(self.latest_, 'maps')
 
         # The model assets section
         self.origin_ = 'assets/latest'
