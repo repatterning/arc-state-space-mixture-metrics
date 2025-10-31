@@ -28,7 +28,6 @@ class Configurations:
             service_name='s3')
 
         # Instances
-        self.__configurations = config.Config()
         self.__secret = src.functions.secret.Secret(connector=connector)
 
     def __buffer(self, key_name: str):
@@ -40,7 +39,7 @@ class Configurations:
 
         buffer = src.s3.unload.Unload(s3_client=self.__s3_client).exc(
             bucket_name=self.__secret.exc(
-                secret_id=self.__configurations.project_key_name, node='configurations'),
+                secret_id=config.Config().project_key_name, node='configurations'),
             key_name=key_name)
 
         return buffer
