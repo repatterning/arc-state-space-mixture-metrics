@@ -59,7 +59,7 @@ class Interface:
 
         # The strings for transferring data to Amazon S3 (Simple Storage Service)
         strings = self.__dictionary.exc(
-            path=self.__configurations.latest_, extension='*',
+            path=self.__configurations.pathway_, extension='*',
             prefix=self.__configurations.prefix + '/')
 
         strings = self.__get_metadata(frame=strings.copy())
@@ -72,5 +72,5 @@ class Interface:
         # Transfer
         messages = src.s3.ingress.Ingress(
             service=self.__service, bucket_name=self.__s3_parameters.external).exc(
-            strings=strings, tagging='project=hydrography')
+            strings=strings, tagging=f'project={self.__configurations.project_tag}')
         logging.info(messages)
