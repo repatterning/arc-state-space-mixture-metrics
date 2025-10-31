@@ -1,4 +1,4 @@
-name: 'Hydrography: Evaluating github.com/repatterning/arc-state-space-mixture-metrics'
+name: 'Hydrography: Evaluating github.com/repatterning/arc-state-space-mixture'
 
 on: [push]
 
