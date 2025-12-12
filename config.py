@@ -21,8 +21,8 @@ class Config:
         '''
         self.architecture = 'arc-state-space-mixture'
         self.s3_parameters_key = 's3_parameters.yaml'
-        self.argument_key = f'artefacts/architecture/{self.architecture}/arguments.json'
-        self.metadata_ = 'arc-state-space-mixture-metrics/external'
+        self.argument_key = f'architectures/{self.architecture}/arguments.json'
+        self.metadata_ = f'architectures/{self.architecture}/metrics/external'
 
         '''
         Project Metadata
