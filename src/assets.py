@@ -56,7 +56,7 @@ class Assets:
         :return:
         """
 
-        origin = self.__configurations.origin_
+        origin = self.__configurations.artefacts_
 
         # The artefacts, vis-à-vis modelling.
         state = self.__get_assets(origin=origin)
