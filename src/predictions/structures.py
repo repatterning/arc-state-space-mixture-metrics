@@ -22,7 +22,7 @@ class Structures:
 
         # Estimates
         estimates = master.estimates
-        estimates['date'] = pd.to_datetime(estimates['timestamp'], unit='us')
+        estimates['date'] = pd.to_datetime(estimates['timestamp'], unit='s')
         estimates.drop(columns='timestamp', inplace=True)
         self.__estimates = estimates.sort_values(by='date', ascending=True, inplace=False)
 
