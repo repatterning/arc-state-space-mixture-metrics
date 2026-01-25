@@ -36,16 +36,17 @@ class Config:
         self.data_ = os.path.join(os.getcwd(), 'data')
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
 
-        self.pathway_ = os.path.join(self.warehouse, self.architecture)
+        sections = ['architecture', self.architecture, 'live']
+        self.pathway_ = os.path.join(self.warehouse, *sections)
         self.points_ = os.path.join(self.pathway_, 'points')
         self.menu_ = os.path.join(self.pathway_, 'menu')
 
         '''
         Cloud Prefix: Destination
         '''
-        self.prefix = f'warehouse/{self.architecture}'
+        self.prefix = 'warehouse/' + '/'.join(sections)
 
         '''
-        Cloud Prefix: Source
+        Cloud Prefix: Source of artefacts
         '''
-        self.origin_ = f'assets/{self.architecture}'
+        self.artefacts_ = f'architecture/{self.architecture}/live'
